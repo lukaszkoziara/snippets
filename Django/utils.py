@@ -40,6 +40,21 @@ def timestamped_filename(location, name, selected_time=None):
     return os.path.join(location, 'errors_{}_{}.txt'.format(name, selected_time))
 
 
+def convert_size(size, precision=2):
+    """Convert Bytes size to more readable format
+
+    Args:
+        size (int): number of Bytes, eg. 1231
+        precision (int): precision size, eg. 2
+    """
+    suffixes = ['B', 'KB', 'MB', 'GB', 'TB']
+    suffix_index = 0
+    while size > 1024 and suffix_index < 4:
+        suffix_index += 1  # increment the index of the suffix
+        size = size / 1024.0  # apply the division
+    return "%.*f%s" % (precision, size, suffixes[suffix_index])
+
+
 class ProgressBar:
     """Progress bar class
 
