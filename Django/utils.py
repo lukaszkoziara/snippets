@@ -55,6 +55,17 @@ def convert_size(size, precision=2):
     return "%.*f%s" % (precision, size, suffixes[suffix_index])
 
 
+def chunks_gen(elements, output_size=100):
+    """Yield successive n-sized chunks from l.
+
+    Args:
+        elements (iter): iterable with many elements, eg. [1,2,3]
+        output_size (int): batch size, eg. 100
+    """
+    for i in range(0, len(elements), output_size):
+        yield elements[i:i + output_size]
+
+
 class ProgressBar:
     """Progress bar class
 
