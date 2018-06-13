@@ -58,4 +58,8 @@ class ProgressBar:
         if result >= self.percent:
             self.percent = result
             sys.stdout.write('\r{} {}%\r'.format('{}'.format('#' * self.percent).ljust(100, '-'), self.percent))
+
+            if self.percent >= 100:
+                sys.stdout.write('')  # go to newline
+
             sys.stdout.flush()
