@@ -67,6 +67,24 @@ def chunks_gen(elements, output_size=100):
         yield elements[i:i + output_size]
 
 
+def ask(question, default='y'):
+    """Yes/No input getter
+
+    Args:
+        question (str): question, eg. 'Are You sure?'
+        default (str): default answer, eg. 'y'
+
+    Usage:
+        if not ask('Continue?', 'n'):
+            sys.exit()
+    """
+    resp = input(question + (' [Y/n] (default: %s)' % default)).lower()
+    if resp not in ['y', 'n', '']:
+        print 'what?'
+        return ask(question)
+    return resp == 'y' or (resp == '' and default == 'y')
+
+
 class ProgressBar:
     """Progress bar class
 
