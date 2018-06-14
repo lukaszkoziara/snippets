@@ -34,11 +34,11 @@ def readable_time(seconds):
     return "{}h {}m {}s".format(int(hours), int(minutes), int(seconds))
 
 
-def timestamped_filename(location, name, selected_time=None):
+def timestamped_filename(location, name, selected_time=None, filename='errors'):
     if not selected_time:
         selected_time = datetime.datetime.now().strftime(DT_FILE_FORMAT)
 
-    return os.path.join(location, 'errors_{}_{}.txt'.format(name, selected_time))
+    return os.path.join(location, '{}_{}_{}.txt'.format(filename, name, selected_time))
 
 
 def convert_size(size, precision=2):
