@@ -110,7 +110,7 @@ class GlobFilesGenerator:
 
     def __init__(self, location, pattern=None, debug=False, set_len=False, sort_key=None):
         """Set data and init glob generator"""
-        print(self.default_start_message)
+        print self.default_start_message
 
         self.debug = debug
         self.counter = 0
