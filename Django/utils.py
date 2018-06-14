@@ -34,11 +34,19 @@ def readable_time(seconds):
     return "{}h {}m {}s".format(int(hours), int(minutes), int(seconds))
 
 
-def timestamped_filename(location, name, selected_time=None, filename='errors'):
+def timestamped_filename(location, name, selected_time=None, file_type='errors'):
+    """create filename with path and current date and time
+
+    Args:
+        location (str): path
+        name (str): script specific name
+        selected_time (str): custom datetime
+        file_type (str): file suffix
+    """
     if not selected_time:
         selected_time = datetime.datetime.now().strftime(DT_FILE_FORMAT)
 
-    return os.path.join(location, '{}_{}_{}.txt'.format(filename, name, selected_time))
+    return os.path.join(location, '{}_{}_{}.txt'.format(file_type, name, selected_time))
 
 
 def convert_size(size, precision=2):
