@@ -1,5 +1,6 @@
 # python 2
 import datetime
+import glob
 import os
 import sys
 
@@ -89,3 +90,50 @@ class ProgressBar:
                 sys.stdout.write('')  # go to newline
 
             sys.stdout.flush()
+
+
+class GlobFilesGenerator:
+    """Implements iterate methods over files
+
+    Args:
+        location (str): path to disk location, eg. location='/home/test/'
+        pattern (str): regex pattern, eg. pattern='*.bman'
+        debug (bool): debug flag, eg. debug=True
+
+    Usage:
+        for elem in GlobFilesGenerator(some_location, pattern='*.jpg', debug=True):
+            do_sth(elem)
+    """
+
+    default_pattern = ''
+    default_start_message = 'Reading files from disk...'
+
+    def __init__(self, location, pattern=None, debug=False, set_len=False, sort_key=None):
+        """Set data and init glob generator"""
+        print(self.default_start_message)
+
+        self.debug = debug
+        self.counter = 0
+        self.pattern = pattern if pattern else self.default_pattern
+
+        self.glob_gen = glob.iglob(os.path.join(location, self.pattern))  # standard glob generator
+
+        self.all_files_count = 0
+        if self.debug or set_len:
+            # check number of files
+            self.all_files_count = 0 if not self.debug else len(list(self.glob_gen))
+            # load glob generator anyway to override list call
+            self.glob_gen = glob.iglob(os.path.join(location, self.pattern))
+
+    def __iter__(self):
+        """Default iterator method"""
+        return self
+
+    def __next__(self):
+        """Grab glob generator result element"""
+        next_elem = self.glob_gen.__next__()
+        # debug info
+        if self.debug:
+            self.counter += 1
+            print '{}/{} - {}'.format(self.counter, self.all_files_count, next_elem)
+        return next_elem
