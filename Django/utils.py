@@ -4,7 +4,10 @@ import glob
 import os
 import sys
 
+from django.conf import settings
 from django.test.utils import override_settings
+import redis
+
 
 
 DT_FILE_FORMAT = '%d_%m_%Y__%H_%M_%S'
@@ -163,3 +166,23 @@ class GlobFilesGenerator:
             self.counter += 1
             print '{}/{} - {}'.format(self.counter, self.all_files_count, next_elem)
         return next_elem
+
+
+class RedisConn():
+    """simple redis context manager
+
+    Usage:
+        with RedisConn() as fastcache:
+            fastcache.get(key)
+    """
+
+    def __init__(self):
+        self.r_conn = redis.ConnectionPool(host=settings.REDIS_HOST, port=settings.REDIS_PORT,
+                                           db=settings.TMP_REDIS_CACHE_DB)
+        self.fastcache = redis.Redis(connection_pool=self.r_conn)
+
+    def __enter__(self):
+        return self.fastcache
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.r_conn.disconnect()
