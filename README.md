@@ -14,3 +14,4 @@ Python snippets (also for Django, Flask, etc.)
 * chunks_gen - chunks generator
 * ProgressBar - help show progress of task
 * GlobFilesGenerator - disk files iterator
+* RedisConn - Redis connection context manager
