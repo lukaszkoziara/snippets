@@ -15,3 +15,10 @@ Python snippets (also for Django, Flask, etc.)
 * ProgressBar - help show progress of task
 * GlobFilesGenerator - disk files iterator
 * RedisConn - Redis connection context manager
+
+# Python2
+
+## Html parser
+* parser - main methods
+* helpers - helper methods
+* rerules - re templates
