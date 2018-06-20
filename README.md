@@ -22,3 +22,7 @@ Python snippets (also for Django, Flask, etc.)
 * parser - main methods
 * helpers - helper methods
 * rerules - re templates
+
+# Python3
+
+## Clamscan
