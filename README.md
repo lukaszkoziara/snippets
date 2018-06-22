@@ -23,6 +23,9 @@ Python snippets (also for Django, Flask, etc.)
 * helpers - helper methods
 * rerules - re templates
 
+## Fabric
+
 # Python3
 
-## Clamscan
+## Clamscan - contains method for scanning file
+## aws - AWS helper methods
