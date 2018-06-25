@@ -3,8 +3,9 @@ import random
 from fabric.api import cd, execute, prefix, run, sudo
 
 from common import get_setting, slack, has_autoscaling_conf, set_autoscale_conn
+from exceptions import LCNameExists
 from servers import ec2_conn
-from updaters import EC2Resource, AMIUpdater, AMINameExists, TagUpdater, ASGUpdater
+from updaters import EC2Resource, AMIUpdater, AMINameExists, TagUpdater, ASGUpdater, LaunchConfigurationUpdater
 
 BASE_PATH = '/home/ec2-user/'
 

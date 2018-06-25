@@ -4,6 +4,7 @@ from itertools import groupby
 
 from boto.exception import EC2ResponseError, BotoServerError
 
+from exceptions import AMINameExists, LCNameExists
 from common import admin_connection
 
 
@@ -43,10 +44,6 @@ class EC2Resource:
             return reservations[0].instances[0]
         except EC2ResponseError:
             return None
-
-
-class AMINameExists(Exception):
-    pass
 
 
 class AMIUpdater:
@@ -176,10 +173,6 @@ def get_stale_confs(lcs):
     lcs = sorted(lcs, key=lambda lc: (lc.group, lc.date))
     grouped_lcs = [(group, list(confs)) for group, confs in groupby(lcs, key=by_group)]
     return [(key, val) for key, val in grouped_lcs if len(val) > 4]
-
-
-class LCNameExists(Exception):
-    pass
 
 
 def ask(question, default='y'):
