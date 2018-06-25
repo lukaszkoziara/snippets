@@ -1,3 +1,5 @@
+import os
+
 import boto.ec2
 from fabric.api import local, sudo, run
 from fabric.exceptions import NetworkError
@@ -89,3 +91,24 @@ def slack(message):
     local('curl -X POST --data-urlencode \'payload={"text": "' + message + '", "channel": "#general",' +
           '"username": "fabric-bot", "icon_url": "http://www.fabfile.org/_static/logo.png"}\' ' +
           'https://hooks.slack.com/services/111/222/333')
+
+
+def has_autoscaling_conf(key):
+    return server_names[key]['autoscaling']
+
+
+def set_autoscale_conn():
+    return boto.ec2.autoscale.connect_to_region(AWS_REGION, aws_access_key_id=AWS_ID, aws_secret_access_key=AWS_KEY)
+
+
+def admin_connection():
+    dirs = [
+       '/etc/boto.cfg',
+        os.path.expanduser('~/.aws/credentials'),
+        os.path.expanduser('~/.boto'),
+        os.path.expanduser('~/.aws/credentials'),
+        os.path.expanduser('~/.boto'),
+    ]
+    if not any(os.path.isfile(p) for p in dirs):
+        raise Exception('You need to place AWS credentials file in one of those places: ' + (', '.join(dirs)))
+    return boto.ec2.autoscale.connect_to_region(AWS_REGION)
