@@ -29,3 +29,7 @@ Python snippets (also for Django, Flask, etc.)
 
 ## Clamscan - contains method for scanning file
 ## aws - AWS helper methods
+## googledrive
+## utils - standalone helper methods:
+* time_methods
+* script_control_methods
