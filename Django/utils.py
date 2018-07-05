@@ -89,9 +89,11 @@ def ask(question, default='y'):
         if not ask('Continue?', 'n'):
             sys.exit()
     """
-    resp = input(question + (' [Y/n] (default: %s)' % default)).lower()
+    upper_default = '[Y/n]' if default == 'y' else '[y/N]'
+
+    resp = input(question + (' {} (default: {})'.format(upper_default, default))).lower()
     if resp not in ['y', 'n', '']:
-        print 'what?'
+        print('what?')
         return ask(question)
     return resp == 'y' or (resp == '' and default == 'y')
 
