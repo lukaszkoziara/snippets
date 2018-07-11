@@ -1,3 +1,6 @@
+import re
+
+from bs4 import Comment
 from HTMLParser import HTMLParser
 
 from rerules import TEXTRULES
@@ -55,3 +58,28 @@ def html_entity_clean(text):
 
 def text_cleaner(text):
     return html_entity_clean(non_breaking_spaces_clean(pictograms_clean(framework_extractor(text))))
+
+
+def get_language_iso(language_string):
+    """Reduce language string, eg. from en-us to en"""
+
+    language = language_string.split(",")[0].split("_")[0].split("-")[0].lower()
+    return language if  len(language) == 2 else None
+
+
+def find_lang_in_comments(head_soup_obj):
+    """Find for comments, eg. <!--[if !IE]><html lang="fr"><![endif]-->"""
+
+    comments = head_soup_obj.findAll(text=lambda text:(isinstance(text, Comment) and text.find("<html") > -1))
+    for comment in comments:
+        try:
+            return re.search('lang=\"(.+?)\"', comment).group(1)
+        except AttributeError:
+            pass
+    return None
+
+
+def lower_fn(*attrs):
+    """Prepare method for extract using case insensitive"""
+
+    return lambda x: x is not None and x.lower() in attrs
